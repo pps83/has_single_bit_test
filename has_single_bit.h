@@ -4,6 +4,11 @@
 
 #define HAS_SINGLE_BIT_INLINE 0
 #define HAS_SINGLE_BIT_POPCOUNT 0
+#define FORCE_POPCNT 0 // to avoid runtime detection
+
+#if FORCE_POPCNT && !defined(__AVX__)
+#define __AVX__ 1
+#endif
 
 #include <stdint.h>
 
