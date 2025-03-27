@@ -3,6 +3,7 @@
 #define HAS_SINGLE_BIT_H_
 
 #define HAS_SINGLE_BIT_INLINE 0
+#define HAS_SINGLE_BIT_POPCOUNT 0
 
 #include <stdint.h>
 
@@ -33,7 +34,11 @@ inline bool has_single_bit_old(T _Val)
 template<typename T>
 inline bool has_single_bit_new(T _Val)
 {
+#if HAS_SINGLE_BIT_POPCOUNT
+    return 1 == std::popcount(_Val);
+#else
     return (_Val ^ (_Val - 1)) > _Val - 1;
+#endif
 }
 #endif // HAS_SINGLE_BIT_INLINE
 #endif // HAS_SINGLE_BIT_H_

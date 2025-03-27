@@ -14,7 +14,11 @@ bool has_single_bit_old(uint16_t _Val)
 
 bool has_single_bit_new(uint16_t _Val)
 {
+#if HAS_SINGLE_BIT_POPCOUNT
+    return 1 == std::popcount(_Val);
+#else
     return (_Val ^ (_Val - 1)) > _Val - 1;
+#endif
 }
 
 bool has_single_bit_std(uint32_t _Val)
@@ -29,7 +33,11 @@ bool has_single_bit_old(uint32_t _Val)
 
 bool has_single_bit_new(uint32_t _Val)
 {
+#if HAS_SINGLE_BIT_POPCOUNT
+    return 1 == std::popcount(_Val);
+#else
     return (_Val ^ (_Val - 1)) > _Val - 1;
+#endif
 }
 
 bool has_single_bit_std(uint64_t _Val)
@@ -44,6 +52,10 @@ bool has_single_bit_old(uint64_t _Val)
 
 bool has_single_bit_new(uint64_t _Val)
 {
+#if HAS_SINGLE_BIT_POPCOUNT
+    return 1 == std::popcount(_Val);
+#else
     return (_Val ^ (_Val - 1)) > _Val - 1;
+#endif
 }
 #endif //!HAS_SINGLE_BIT_INLINE
