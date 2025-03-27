@@ -1,6 +1,7 @@
 #include "has_single_bit.h"
 #include <bit>
 
+#if !HAS_SINGLE_BIT_INLINE
 bool has_single_bit_std(uint16_t _Val)
 {
     return std::has_single_bit(_Val);
@@ -45,3 +46,4 @@ bool has_single_bit_new(uint64_t _Val)
 {
     return (_Val ^ (_Val - 1)) > _Val - 1;
 }
+#endif //!HAS_SINGLE_BIT_INLINE
