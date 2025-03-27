@@ -3,25 +3,19 @@
 #define HAS_SINGLE_BIT_H_
 
 #define HAS_SINGLE_BIT_INLINE 0
-#define HAS_SINGLE_BIT_POPCOUNT 0
-#define FORCE_POPCNT 0 // to avoid runtime detection
-
-#if FORCE_POPCNT && !defined(__AVX__)
-#define __AVX__ 1
-#endif
 
 #include <stdint.h>
 
 #if !HAS_SINGLE_BIT_INLINE
 bool has_single_bit_std(uint16_t _Val);
-bool has_single_bit_old(uint16_t _Val);
 bool has_single_bit_new(uint16_t _Val);
+bool has_single_bit_popcount(uint16_t _Val);
 bool has_single_bit_std(uint32_t _Val);
-bool has_single_bit_old(uint32_t _Val);
 bool has_single_bit_new(uint32_t _Val);
+bool has_single_bit_popcount(uint32_t _Val);
 bool has_single_bit_std(uint64_t _Val);
-bool has_single_bit_old(uint64_t _Val);
 bool has_single_bit_new(uint64_t _Val);
+bool has_single_bit_popcount(uint64_t _Val);
 #else
 #include <bit>
 template<typename T>
@@ -31,19 +25,15 @@ inline bool has_single_bit_std(T _Val)
 }
 
 template<typename T>
-inline bool has_single_bit_old(T _Val)
+inline bool has_single_bit_new(T _Val)
 {
-    return _Val != 0 && (_Val & (_Val - 1)) == 0;
+    return (_Val ^ (_Val - 1)) > _Val - 1;
 }
 
 template<typename T>
-inline bool has_single_bit_new(T _Val)
+inline bool has_single_bit_popcount(T _Val)
 {
-#if HAS_SINGLE_BIT_POPCOUNT
-    return 1 == std::popcount(_Val);
-#else
-    return (_Val ^ (_Val - 1)) > _Val - 1;
-#endif
+    return 1 == std::_Unchecked_popcount(_Val);
 }
 #endif // HAS_SINGLE_BIT_INLINE
 #endif // HAS_SINGLE_BIT_H_

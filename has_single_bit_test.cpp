@@ -54,9 +54,9 @@ BENCHMARK(prefix##func)
 #endif
 
 #define TEST(type, size) \
-TEST_FUNC(testData##type.v##size, has_single_bit_old, type##size##_); \
 TEST_FUNC(testData##type.v##size, has_single_bit_std, type##size##_); \
-TEST_FUNC(testData##type.v##size, has_single_bit_new, type##size##_)
+TEST_FUNC(testData##type.v##size, has_single_bit_new, type##size##_); \
+TEST_FUNC(testData##type.v##size, has_single_bit_popcount, type##size##_)
 
 TEST(Rand, 16);
 TEST(Rand, 32);
